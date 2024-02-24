@@ -81,7 +81,6 @@ abbr -a -g please 'sudo'																						# Polite way to sudo
 abbr -a -g fucking 'sudo'																						# Rude way to sudo
 abbr -a -g sayonara 'shutdown now'																	# Epic way to shutdown
 abbr -a -g stahp 'shutdown now'																		# Panik - stonk man
-abbr -a -g ar 'echo "awesome.restart()" | awesome-client'							# Reload AwesomeWM
 abbr -a -g shinei 'kill -9'																						# Kill ala DIO
 abbr -a -g kv 'kill -9 (pgrep vlc)'																			# Kill zombie vlc
 abbr -a -g priv 'fish --private'																				# Fish incognito mode

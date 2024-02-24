@@ -5,23 +5,13 @@ let
 in
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "paradox";
-  home.homeDirectory = "/home/${config.home.username}";
+  home = {
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  username = "paradox";
+  homeDirectory = "/home/${config.home.username}";
+  stateVersion = "23.11"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = with pkgs; 
+  packages = with pkgs; 
     [ neovim
       gcc
       feh
@@ -41,17 +31,14 @@ in
       zoxide
       thefuck
       direnv
+      nixfmt
+      okular
     ];
 
-  home.shellAliases = {
-  };
+  file = {
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-
-    # TODO: copy tmux conf in config
     "${homeDirectory}/.tmux.conf".source = ./config/tmux/.tmux.conf;
+    # "${homeDirectory}/.config/picom.conf".source = ./config/picom/picom.conf;
 
     "${homeDirectory}/.config/Wallpapers" = {
       recursive = true;
@@ -90,36 +77,37 @@ in
 
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. If you don't want to manage your shell through Home
-  # Manager then you have to manually source 'hm-session-vars.sh' located at
-  # either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/paradox/etc/profile.d/hm-session-vars.sh
-  #
-  home.sessionVariables = {
+  sessionVariables = {
     EDITOR = "nvim";
   };
 
-  programs.fish = {
-    enable = true;
-    shellAliases = {  rebuild = "sudo nixos-rebuild switch --flake /home/paradox/nixos#default"; vim = "nvim"; };
 
-  };
+  # Let Home Manager install and manage itself.
+};
+
+  programs.home-manager.enable = true;
+  programs.git.enable = true;
+  programs.fish.enable = true;
+  programs.emacs.enable = true;
+  systemd.user.startServices = "sd-switch";
 
   gtk = {
     enable = true;
+    theme = {
+      name = "Catppuccin-Macchiato-Compact-Pink-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "pink" ];
+        size = "compact";
+        tweaks = [ "rimless" "black" ];
+        variant = "mocha";
+      };
+    };
   };
 
-  programs.emacs.enable = true;
+  xdg.configFile = {
+    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+  };
 
-  # Let Home Manager install and manage itself.
 }

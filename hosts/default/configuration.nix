@@ -83,12 +83,13 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+
+  programs.fish.enable = true;
   users.users.paradox = {
     isNormalUser = true;
     description = "paradox";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
-
   };
 
   # Allow unfree packages
@@ -103,12 +104,12 @@
    firefox
    polybar
    git
-   picom
    nitrogen
    kitty
    tmux
    font-awesome
    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "Mononoki" "JetBrainsMono" ]; })
+   pcmanfm
   ];
 
   home-manager = {
@@ -118,8 +119,18 @@
     };
   };
 
-
-  programs.fish.enable = true;
+  services.picom = {
+      enable = true;
+      settings = {
+        corner-radius = 12;
+        rounded-corners-exclude = [
+          "class_i = 'polybar'"
+          "class_g = 'i3lock'"
+          "class_g = 'Polybar'"
+        ];
+        round-borders = 8;
+      };
+    };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -147,5 +158,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
