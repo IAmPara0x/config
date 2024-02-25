@@ -121,7 +121,6 @@
    tmux
    font-awesome
    firefox
-   (pkgs.nerdfonts.override { fonts = [ "FiraCode" "Mononoki" "JetBrainsMono" ]; })
    pcmanfm
   ];
 

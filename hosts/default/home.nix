@@ -45,6 +45,8 @@ in
       zathura
       zotero
 
+      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" "JetBrainsMono" ]; })
+
       # MISC packages
       tree
       btop
@@ -93,6 +95,11 @@ in
     "${homeDirectory}/.config/rofi" = {
       recursive = true;
       source = ./config/rofi;
+    };
+
+    "${homeDirectory}/.emacs.d" = {
+      recursive = true;
+      source = ./config/emacs;
     };
 
   };
