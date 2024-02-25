@@ -11,6 +11,7 @@ in
     [ ./modules/nodejs.nix
       ./modules/python.nix
       ./modules/lua.nix
+      # ../../modules/firefox.nix
     ];
 
 
@@ -39,6 +40,14 @@ in
       direnv
       nixfmt
       okular
+      rofi
+      ungoogled-chromium
+      zathura
+      zotero
+
+      # MISC packages
+      tree
+      btop
     ];
 
   file = {
@@ -79,6 +88,11 @@ in
     "${homeDirectory}/.config/fish" = {
       recursive = true;
       source = ./config/fish;
+    };
+
+    "${homeDirectory}/.config/rofi" = {
+      recursive = true;
+      source = ./config/rofi;
     };
 
   };

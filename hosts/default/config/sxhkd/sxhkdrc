@@ -8,7 +8,13 @@ super + Return
 
 # program launcher
 super + @space
-	dmenu_run
+	sh $HOME/.config/rofi/bin/launcher
+
+super + S
+	sh $HOME/.config/rofi/bin/screenshot
+
+super + P
+	sh $HOME/.config/rofi/bin/powermenu
 
 # start zotero
 super + z

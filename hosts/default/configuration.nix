@@ -114,13 +114,13 @@
    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    wget
    sxhkd 
-   firefox
    polybar
    git
    nitrogen
    kitty
    tmux
    font-awesome
+   firefox
    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "Mononoki" "JetBrainsMono" ]; })
    pcmanfm
   ];
@@ -135,13 +135,26 @@
   services.picom = {
       enable = true;
       settings = {
+
         corner-radius = 12;
+
+        round-borders = 3;
+
         rounded-corners-exclude = [
           "class_i = 'polybar'"
           "class_g = 'i3lock'"
           "class_g = 'Polybar'"
         ];
-        round-borders = 8;
+
+        shadow = true;
+
+        transition-length = 300;
+        transition-pow-x = 0.1;
+        transition-pow-y = 0.1;
+        transition-pow-w = 0.1;
+        transition-pow-h = 0.1;
+        size-transition = true;
+
       };
     };
 
