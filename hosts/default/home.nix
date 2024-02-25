@@ -2,6 +2,7 @@
 
 let 
   homeDirectory = config.home.homeDirectory;
+  gillsans = pkgs.callPackage ../../modules/polybar-fonts.nix { };
 in
 
 {
@@ -50,6 +51,7 @@ in
       # MISC packages
       tree
       btop
+      gillsans
     ];
 
   file = {
@@ -136,5 +138,8 @@ in
     "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
     "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
   };
+
+
+fonts.fontconfig.enable = true;
 
 }

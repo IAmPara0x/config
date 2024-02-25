@@ -154,8 +154,17 @@
         transition-pow-h = 0.1;
         size-transition = true;
 
+        # NOTE: don't on inside virtual box
+        # experimental-backends = true;
+        # backend = "glx";
+
       };
     };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = [];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
