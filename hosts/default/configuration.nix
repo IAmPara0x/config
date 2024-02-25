@@ -45,19 +45,32 @@
     LC_TIME = "en_IN";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.windowManager.bspwm.enable = true;
-
-  # Configure keymap in X11
   services.xserver = {
+    enable = true;
+
+    displayManager.lightdm.enable = true;
+    desktopManager.xfce.enable = true;
+    windowManager.bspwm.enable = true;
+
     layout = "us";
     xkbVariant = "";
+
+    # TODO: This does not work find a way to change the screen resolution in xserver
+    config = ''
+        Section "Screen"
+            Identifier "Screen0"
+            Device     "Device0"
+            Monitor    "Monitor0"
+            SubSection "Display"
+                Modes "1920x1080"
+            EndSubSection
+        EndSection
+    '';
+
   };
+
+
+
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

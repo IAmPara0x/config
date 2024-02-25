@@ -5,27 +5,33 @@ let
 in
 
 {
+
+
+  imports = 
+    [ ./modules/nodejs.nix
+      ./modules/python.nix
+      ./modules/lua.nix
+    ];
+
+
   home = {
 
   username = "paradox";
   homeDirectory = "/home/${config.home.username}";
   stateVersion = "23.11"; # Please read the comment before changing.
 
+
   packages = with pkgs; 
     [ neovim
       gcc
       feh
-      lua
       fzf
       ripgrep
       unzip
       cargo
       rustc
-      nodejs_21
-      nodePackages.pyright
       fd
       ruby
-      luajitPackages.luarocks
       tree-sitter
       starship
       zoxide
@@ -99,7 +105,7 @@ in
         accents = [ "pink" ];
         size = "compact";
         tweaks = [ "rimless" "black" ];
-        variant = "mocha";
+        variant = "macchiato";
       };
     };
   };
