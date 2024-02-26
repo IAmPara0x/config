@@ -1,28 +1,15 @@
-{ config, pkgs, lib }:
+{ pkgs,  ... }:
+
 let
 
   theme = "mocha";
-  catppuccin-kitty-theme = pkgs.stdenvNoCC {
-    name = "catppuccin-kitty-theme";
-    dontConfigure = true;
-
-    src = pkgs.fetchFromGitHub {
-      owner = "catppuccin";
-      repo = "kitty";
-      rev = "d7d61716a83cd135344cbb353af9d197c5d7cec1";
-      sha256 = "sha256-n5UcGHU/DQYezIma9w3zAQ2QZ7q6TmnbWYghT0EIETU=";
-    };
-    installPhase = 
-    ''
-      mkdir $out
-      cp ./themes/${theme}.conf $out
-    '';
-  };
+  catppuccin-kitty-theme = pkgs.callPackage ./catppuccin-kitty.nix {inherit theme;};
 in {
 
   programs.kitty = {
     enable = true;
     font.size = 10;
+    font.name = "JetBrainsMonoNL NFM SemiBold";
     extraConfig = ''
       include ${catppuccin-kitty-theme}/${theme}.conf
       font_family      JetBrainsMonoNL NFM SemiBold

@@ -1,24 +1,39 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
+
+  
+  home.packages = with pkgs; [
+      starship
+      thefuck
+      zsh-vi-mode
+  ];
 
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
 
   programs.zsh = {
     enable = true;
+    enableAutosuggestions = true;
+    syntaxHighlighting.enable = true;
+    enableCompletion = true;
+    history.size = 50000;
+
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "thefuck" "zsh-vi-mode" "zsh-autosuggestions" ];
+      plugins = [ "git" "thefuck" "vi-mode" ];
       theme = "robbyrussell";
     };
-    history.size = 50000;
+
+    shellAliases = {
+      rebuild =
+        "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#default";
+    };
+
     initExtra = ''
-      ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+      bindkey -M viins 'jk' vi-cmd-mode
     '';
-    enableCompletion = true;
+
+    sessionVariables = { EDITOR = "nvim"; };
+
   };
 
-  shellAliases = {
-    rebuild =
-      "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#default";
-  };
 }

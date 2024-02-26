@@ -4,7 +4,7 @@ let
   python3 = pkgs.python3;
   python3Packages = python3.pkgs;
   catppuccin_jupyterlab =
-    pkgs.callPackage ../../../modules/catppuccin-jupyterlab.nix { };
+    pkgs.callPackage ../../../modules/catppuccin-jupyterlab.nix { buildPythonPackage = python3Packages.buildPythonPackage; fetchPypi = python3Packages.fetchPypi ; };
 
 in {
 

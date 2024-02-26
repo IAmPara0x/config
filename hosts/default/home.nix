@@ -10,7 +10,8 @@ in {
     ./modules/nodejs.nix
     ./modules/python.nix
     ./modules/lua.nix
-    # ../../modules/firefox.nix
+    ./modules/zsh.nix
+    ../../modules/kitty.nix
   ];
 
   home = {
@@ -54,17 +55,11 @@ in {
     file = {
 
       "${homeDirectory}/.tmux.conf".source = ./config/tmux/.tmux.conf;
-      # "${homeDirectory}/.config/picom.conf".source = ./config/picom/picom.conf;
 
       "${homeDirectory}/.config/Wallpapers" = {
         recursive = true;
         source = ./config/Wallpapers;
       };
-
-      # "${homeDirectory}/.config/kitty" = {
-      #   recursive = true;
-      #   source = ./config/kitty;
-      # };
 
       "${homeDirectory}/.config/bspwm" = {
         recursive = true;
@@ -86,11 +81,6 @@ in {
         source = ./config/nvim;
       };
 
-      # "${homeDirectory}/.config/fish" = {
-      #   recursive = true;
-      #   source = ./config/fish;
-      # };
-
       "${homeDirectory}/.config/rofi" = {
         recursive = true;
         source = ./config/rofi;
@@ -103,7 +93,6 @@ in {
 
     };
 
-    sessionVariables = { EDITOR = "nvim"; };
 
     # Let Home Manager install and manage itself.
   };
