@@ -1,11 +1,6 @@
 { config, pkgs, ... }: {
 
-  
-  home.packages = with pkgs; [
-      starship
-      thefuck
-      zsh-vi-mode
-  ];
+  home.packages = with pkgs; [ starship thefuck zsh-vi-mode ];
 
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;

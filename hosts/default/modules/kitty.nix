@@ -1,9 +1,10 @@
-{ pkgs,  ... }:
+{ pkgs, ... }:
 
 let
 
   theme = "mocha";
-  catppuccin-kitty-theme = pkgs.callPackage ./catppuccin-kitty.nix {inherit theme;};
+  catppuccin-kitty-theme =
+    pkgs.callPackage ../../../modules/catppuccin-kitty.nix { inherit theme; };
 in {
 
   programs.kitty = {

@@ -11,7 +11,7 @@ in {
     ./modules/python.nix
     ./modules/lua.nix
     ./modules/zsh.nix
-    ../../modules/kitty.nix
+    ./modules/kitty.nix
   ];
 
   home = {
@@ -26,7 +26,6 @@ in {
       wget
       gcc
       feh
-      fzf
       ripgrep
       unzip
       cargo
@@ -93,7 +92,6 @@ in {
 
     };
 
-
     # Let Home Manager install and manage itself.
   };
 
@@ -101,6 +99,11 @@ in {
   programs.git.enable = true;
   programs.emacs.enable = true;
   systemd.user.startServices = "sd-switch";
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   gtk = {
     enable = true;
