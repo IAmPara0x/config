@@ -5,11 +5,10 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -25,7 +24,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
@@ -57,20 +56,17 @@
 
     # TODO: This does not work find a way to change the screen resolution in xserver
     config = ''
-        Section "Screen"
-            Identifier "Screen0"
-            Device     "Device0"
-            Monitor    "Monitor0"
-            SubSection "Display"
-                Modes "1920x1080"
-            EndSubSection
-        EndSection
+      Section "Screen"
+          Identifier "Screen0"
+          Device     "Device0"
+          Monitor    "Monitor0"
+          SubSection "Display"
+              Modes "1920x1080"
+          EndSubSection
+      EndSection
     '';
 
   };
-
-
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -97,12 +93,12 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
   users.users.paradox = {
     isNormalUser = true;
     description = "paradox";
     extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages
@@ -111,59 +107,56 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   wget
-   sxhkd 
-   polybar
-   git
-   nitrogen
-   kitty
-   tmux
-   font-awesome
-   firefox
-   pcmanfm
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    sxhkd
+    polybar
+    git
+    nitrogen
+    kitty
+    tmux
+    font-awesome
+    firefox
+    pcmanfm
   ];
 
+  environment.pathsToLink = [ "/share/zsh" ];
+
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
-    users = {
-      "paradox" = import ./home.nix;
-    };
+    extraSpecialArgs = { inherit inputs; };
+    users = { "paradox" = import ./home.nix; };
   };
 
   services.picom = {
-      enable = true;
-      settings = {
+    enable = true;
+    settings = {
 
-        corner-radius = 12;
+      corner-radius = 12;
 
-        round-borders = 3;
+      round-borders = 3;
 
-        rounded-corners-exclude = [
-          "class_i = 'polybar'"
-          "class_g = 'i3lock'"
-          "class_g = 'Polybar'"
-        ];
+      rounded-corners-exclude =
+        [ "class_i = 'polybar'" "class_g = 'i3lock'" "class_g = 'Polybar'" ];
 
-        shadow = true;
+      shadow = true;
 
-        transition-length = 300;
-        transition-pow-x = 0.1;
-        transition-pow-y = 0.1;
-        transition-pow-w = 0.1;
-        transition-pow-h = 0.1;
-        size-transition = true;
+      transition-length = 300;
+      transition-pow-x = 0.1;
+      transition-pow-y = 0.1;
+      transition-pow-w = 0.1;
+      transition-pow-h = 0.1;
+      size-transition = true;
 
-        # NOTE: don't on inside virtual box
-        # experimental-backends = true;
-        # backend = "glx";
+      # NOTE: don't on inside virtual box
+      # experimental-backends = true;
+      # backend = "glx";
 
-      };
     };
+  };
 
   programs.nix-ld = {
     enable = true;
-    libraries = [];
+    libraries = [ ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are

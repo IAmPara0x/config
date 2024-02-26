@@ -1,8 +1,2 @@
-{pkgs, ...}:
-{
-  home.packages = with pkgs; [
-      lua
-      luajitPackages.luarocks
-  ];
-}
+{ pkgs, ... }: { home.packages = with pkgs; [ lua luajitPackages.luarocks ]; }
 

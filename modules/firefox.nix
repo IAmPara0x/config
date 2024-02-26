@@ -1,8 +1,5 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
+{ pkgs, inputs, ... }:
+let
   SilentFox = pkgs.fetchFromGitHub {
     owner = "linuxmobile";
     repo = "SilentFox";
@@ -33,44 +30,42 @@ in {
       search.force = true;
       search.engines = {
         "Home Manager NixOs" = {
-          urls = [
-            {
-              template = "https://mipmip.github.io/home-manager-option-search/";
-              params = [
-                {
-                  name = "query";
-                  value = "{searchTerms}";
-                }
-              ];
-            }
-          ];
-          icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-          definedAliases = ["@hm"];
+          urls = [{
+            template = "https://mipmip.github.io/home-manager-option-search/";
+            params = [{
+              name = "query";
+              value = "{searchTerms}";
+            }];
+          }];
+          icon =
+            "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          definedAliases = [ "@hm" ];
         };
         "Nix Packages" = {
-          urls = [
-            {
-              template = "https://search.nixos.org/packages";
-              params = [
-                {
-                  name = "type";
-                  value = "packages";
-                }
-                {
-                  name = "query";
-                  value = "{searchTerms}";
-                }
-              ];
-            }
-          ];
-          icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-          definedAliases = ["@np"];
+          urls = [{
+            template = "https://search.nixos.org/packages";
+            params = [
+              {
+                name = "type";
+                value = "packages";
+              }
+              {
+                name = "query";
+                value = "{searchTerms}";
+              }
+            ];
+          }];
+          icon =
+            "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          definedAliases = [ "@np" ];
         };
         "NixOS Wiki" = {
-          urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
+          urls = [{
+            template = "https://nixos.wiki/index.php?search={searchTerms}";
+          }];
           iconUpdateURL = "https://nixos.wiki/favicon.png";
           updateInterval = 24 * 60 * 60 * 1000; # every day
-          definedAliases = ["@nw"];
+          definedAliases = [ "@nw" ];
         };
         Bing.metaData.hidden = true;
         "Amazon.com".metaData.hidden = true;
@@ -114,8 +109,10 @@ in {
         # SECUREFOX
         # TRACKING PROTECTION
         "browser.contentblocking.category" = "strict";
-        "urlclassifier.trackingSkipURLs" = "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com";
-        "urlclassifier.features.socialtracking.skipURLs" = "*.instagram.com, *.twitter.com, *.twimg.com";
+        "urlclassifier.trackingSkipURLs" =
+          "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com";
+        "urlclassifier.features.socialtracking.skipURLs" =
+          "*.instagram.com, *.twitter.com, *.twimg.com";
         "network.cookie.sameSite.noneRequiresSecure" = true;
         "browser.download.start_downloads_in_tmp_dir" = true;
         "browser.helperApps.deleteTempFileOnExit" = true;
@@ -174,7 +171,8 @@ in {
         # MOZILLA
         "permissions.default.desktop-notification" = 2;
         "permissions.default.geo" = 2;
-        "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
+        "geo.provider.network.url" =
+          "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
         "permissions.manager.defaultsUrl" = "";
         "webchannel.allowObject.urlWhitelist" = "";
         # TELEMETRY
@@ -214,8 +212,10 @@ in {
         "extensions.htmlaboutaddons.recommendations.enabled" = false;
         "browser.discovery.enabled" = false;
         "browser.shell.checkDefaultBrowser" = false;
-        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
-        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" =
+          false;
+        "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" =
+          false;
         "browser.preferences.moreFromMozilla" = false;
         "browser.tabs.tabmanager.enabled" = false;
         "browser.aboutConfig.showWarning" = false;
@@ -260,9 +260,9 @@ in {
 
         "intl.accept_languages" = "es-AR, es, en-US, en";
       };
-      userChrome = builtins.concatStringsSep "\n" (builtins.map builtins.readFile [
-        "${SilentFox}/userChrome.css"
-      ]);
+      userChrome = builtins.concatStringsSep "\n"
+        (builtins.map builtins.readFile [ "${SilentFox}/userChrome.css" ]);
     };
   };
 }
+
