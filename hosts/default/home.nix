@@ -24,26 +24,45 @@ in {
     stateVersion = "23.11"; # Please read the comment before changing.
 
     packages = with pkgs; [
-      neovim
+
+
+      # COMPILERS:
       gcc
-      cargo
       rustc
+      cargo
       ruby
-      tree-sitter
-      direnv
-      nixfmt
-      okular
+
+
+      # Application launcher
       rofi
+
+      # Media
       mpv
-      ungoogled-chromium
+
+
+      # PDF(s) and readings
       zathura
       zotero
+      okular
+
+
+      # browser
+      ungoogled-chromium
+
+      # notifications
+      dunst
 
       # Fonts
       polybar-fonts
       (nerdfonts.override {
         fonts = [ "FiraCode" "Mononoki" "JetBrainsMono" ];
       })
+
+      # Misc
+
+      nixfmt
+      tree-sitter
+      direnv
     ];
 
     file = {
@@ -92,6 +111,7 @@ in {
 
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.neovim.enable = true;
   programs.emacs.enable = true;
   programs.bat.enable = true;
   systemd.user.startServices = "sd-switch";

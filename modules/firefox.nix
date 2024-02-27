@@ -52,6 +52,7 @@ in {
           darkreader
           return-youtube-dislikes
           sponsorblock
+          enhancer-for-youtube
         ];
     };
   };
