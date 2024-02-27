@@ -12,6 +12,9 @@ in {
     ./modules/lua.nix
     ./modules/zsh.nix
     ./modules/kitty.nix
+    ./modules/cli.nix
+    ./modules/xdg.nix
+    ../../modules/firefox.nix
   ];
 
   home = {
@@ -22,33 +25,25 @@ in {
 
     packages = with pkgs; [
       neovim
-      curl
-      wget
       gcc
-      feh
-      ripgrep
-      unzip
       cargo
       rustc
-      fd
       ruby
       tree-sitter
       direnv
       nixfmt
       okular
       rofi
+      mpv
       ungoogled-chromium
       zathura
       zotero
 
+      # Fonts
+      polybar-fonts
       (nerdfonts.override {
         fonts = [ "FiraCode" "Mononoki" "JetBrainsMono" ];
       })
-
-      # MISC packages
-      tree
-      btop
-      polybar-fonts
     ];
 
     file = {
@@ -98,6 +93,7 @@ in {
   programs.home-manager.enable = true;
   programs.git.enable = true;
   programs.emacs.enable = true;
+  programs.bat.enable = true;
   systemd.user.startServices = "sd-switch";
 
   programs.fzf = {
@@ -118,14 +114,6 @@ in {
     };
   };
 
-  xdg.configFile = {
-    "gtk-4.0/assets".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-  };
 
   fonts.fontconfig.enable = true;
 }

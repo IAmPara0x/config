@@ -118,6 +118,7 @@
     font-awesome
     firefox
     pcmanfm
+    xclip
   ];
 
   environment.pathsToLink = [ "/share/zsh" ];
