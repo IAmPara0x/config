@@ -123,6 +123,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (_: true);
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -144,7 +145,7 @@
   environment.pathsToLink = [ "/share/zsh" ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs pkgs; };
     users = { "paradox" = import ./home.nix; };
   };
 

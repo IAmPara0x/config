@@ -25,7 +25,6 @@ in {
 
     packages = with pkgs; [
 
-
       # COMPILERS:
       gcc
       rustc
@@ -133,7 +132,6 @@ in {
       };
     };
   };
-
 
   fonts.fontconfig.enable = true;
 }

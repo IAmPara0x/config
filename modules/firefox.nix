@@ -8,6 +8,8 @@ let
       sha256 = "sha256-up/LDgNGZEOyqZ9kitHjx7V+uD/32mqLeV2PfKvkU3Y=";
     };
 in {
+
+
   programs.firefox = {
     enable = true;
     policies = {
@@ -37,6 +39,7 @@ in {
       userChrome = builtins.concatStringsSep "\n"
         (builtins.map builtins.readFile [ "${oneFox}/chrome/userChrome.css" ]);
       settings = {
+
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "layers.acceleration.force-enabled" = true;
         "gfx.webrender.all" = true;
@@ -46,7 +49,7 @@ in {
         "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts" = false;
       };
 
-      extensions = with inputs.firefox-addons.packages."x86_64-linux";
+      extensions = with pkgs.nur.repos.rycee.firefox-addons;
         [ ublock-origin
           tabliss
           darkreader
