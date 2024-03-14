@@ -1,6 +1,5 @@
 { config, pkgs, ... }: {
 
-
   home.packages = with pkgs; [ starship thefuck zsh-vi-mode ];
 
   programs.zoxide.enable = true;
@@ -22,12 +21,15 @@
     };
 
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#default";
+      rebuild =
+        "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/nixos#default";
       cleanup = "sudo nix-collect-garbage -d";
       l = "eza -lF --time-style=long-iso --icons";
       la = "eza -lah --tree";
-      ls = "eza -h --git --icons --color=auto --group-directories-first -s extension";
-      cat = "bat --theme=base16 --number --color=always --paging=never --tabs=2 --wrap=never";
+      ls =
+        "eza -h --git --icons --color=auto --group-directories-first -s extension";
+      cat =
+        "bat --theme=base16 --number --color=always --paging=never --tabs=2 --wrap=never";
     };
 
     initExtra = ''

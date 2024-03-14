@@ -19,6 +19,7 @@ in {
       python3Packages.regex
       python3Packages.requests
       python3Packages.numpy
+      python3Packages.pytorch-bin
       catppuccin_jupyterlab
     ]))
 

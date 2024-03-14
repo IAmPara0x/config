@@ -39,7 +39,7 @@ super + x
 	/home/paradox/.config/spotify-launch.sh
 
 alt + j
-	pamixer --decrease 5
+  pamixer --decrease 5
 
 alt + k
   pamixer --increase 5

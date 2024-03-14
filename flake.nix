@@ -12,29 +12,31 @@
 
   };
 
-  outputs = { self, nur, nixpkgs, ... }@inputs: 
-  let system = "x86_64-linux";
+  outputs = { self, nur, nixpkgs, ... }@inputs:
+    let
+      changeGcc = final: prev: { gcc = pkgs.gcc12; };
+      system = "x86_64-linux";
       stateVersion = "23.11"; # Please read the comment before changing.
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-          inputs.nur.overlay
-        ];
+        overlays = [ inputs.nur.overlay ];
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;
+          cudaSupport = true;
+          nvidia.acceptLicense = true;
         };
       };
-  in
 
-  { nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-    specialArgs = { inherit inputs self stateVersion pkgs; };
-      modules = [
-        ./hosts/default/configuration.nix
-        inputs.home-manager.nixosModules.default
-      ];
+    in {
+      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs self stateVersion pkgs; };
+        modules = [
+          ./hosts/default/configuration.nix
+          inputs.home-manager.nixosModules.default
+        ];
+      };
+
     };
-
-  };
 }
 

@@ -15,6 +15,7 @@ in {
     ./modules/cli.nix
     ./modules/xdg.nix
     ../../modules/firefox.nix
+    ./modules/chromium.nix
   ];
 
   home = {
@@ -26,27 +27,34 @@ in {
     packages = with pkgs; [
 
       # COMPILERS:
-      gcc
       rustc
       cargo
       ruby
+      gnumake
+      cmake
+      (hiPrio clang-tools.override {
+        llvmPackages = llvmPackages_16;
+        enableLibcxx = false;
+      })
+      nil
+      # Do not use the clangd from this package as it does not work correctly with
+      # stdlib headers.
+      llvmPackages_16.libstdcxxClang
 
+      cudaPackages.cudnn
+      cudatoolkit
 
       # Application launcher
       rofi
 
       # Media
       mpv
-
+      pamixer
 
       # PDF(s) and readings
       zathura
       zotero
       okular
-
-
-      # browser
-      ungoogled-chromium
 
       # notifications
       dunst
@@ -61,7 +69,6 @@ in {
 
       nixfmt
       tree-sitter
-      direnv
     ];
 
     file = {
@@ -109,16 +116,13 @@ in {
   };
 
   programs.home-manager.enable = true;
-  programs.git.enable = true;
   programs.neovim.enable = true;
-  programs.emacs.enable = true;
+  programs.emacs = {
+    enable = true;
+    extraPackages = epkgs: with epkgs; [ tree-sitter-langs tree-sitter ];
+  };
   programs.bat.enable = true;
   systemd.user.startServices = "sd-switch";
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
 
   gtk = {
     enable = true;
@@ -127,7 +131,7 @@ in {
       package = pkgs.catppuccin-gtk.override {
         accents = [ "pink" ];
         size = "compact";
-        tweaks = [ "rimless" "black" ];
+        tweaks = [ "rimless" ];
         variant = "macchiato";
       };
     };

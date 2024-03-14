@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, lib, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "stars"; # Define your hostname.
+  networking.hostName = "yuki"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -29,21 +29,31 @@
     substituters = [
       # high priority since it's almost always used
       "https://cache.nixos.org?priority=10"
+      "https://cuda-maintainers.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://hydra.iohk.io"
+      "https://iohk.cachix.org"
+      "https://cache.nixos.org/"
       "https://anyrun.cachix.org"
       "https://fufexan.cachix.org"
-      "https://helix.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://nix-community.cachix.org"
     ];
 
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "fufexan.cachix.org-1:LwCDjCJNJQf5XD2BV+yamQIMZfcKWR9ISIFy5curUsY="
-      "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
+  };
+
+  nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 21d";
   };
 
   # Set your time zone.
@@ -70,23 +80,35 @@
     displayManager.lightdm.enable = true;
     desktopManager.xfce.enable = true;
     windowManager.bspwm.enable = true;
+    videoDrivers = [ "nvidia" ];
 
     layout = "us";
     xkbVariant = "";
 
-    # TODO: This does not work find a way to change the screen resolution in xserver
-    config = ''
-      Section "Screen"
-          Identifier "Screen0"
-          Device     "Device0"
-          Monitor    "Monitor0"
-          SubSection "Display"
-              Modes "1920x1080"
-          EndSubSection
-      EndSection
-    '';
-
   };
+
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  # hardware.nvidia = {
+  #   package = pkgs.cudaPackages.nvidia_driver;
+  # };
+  #
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+    version = "550.54.14";
+    sha256_64bit = "sha256-jEl/8c/HwxD7h1FJvDD6pP0m0iN7LLps0uiweAFXz+M=";
+    sha256_aarch64 = "sha256-k7k22z5PYZdBVfuYXVcl9SFUMqZmK4qyxoRwlYyRdgU=";
+    openSha256 = "sha256-dktHCoESqoNfu5M73aY5MQGROlZawZwzBqs3RkOyfoQ=";
+    settingsSha256 = "sha256-m2rNASJp0i0Ez2OuqL+JpgEF0Yd8sYVCyrOoo/ln2a4=";
+    persistencedSha256 = "sha256-ci86XGlno6DbHw6rkVSzBpopaapfJvk0+lHcR4LDq50=";
+
+    ibtSupport = true;
+  };
+
+  nixpkgs.config.nvidia.acceptLicense = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -140,6 +162,13 @@
     firefox
     pcmanfm
     xclip
+    neofetch
+    libGLU
+    libGL
+    ncurses5
+    binutils
+    cryptsetup
+    pciutils
   ];
 
   environment.pathsToLink = [ "/share/zsh" ];
@@ -168,11 +197,8 @@
       transition-pow-w = 0.1;
       transition-pow-h = 0.1;
       size-transition = true;
-
-      # NOTE: don't on inside virtual box
-      # experimental-backends = true;
-      # backend = "glx";
-
+      experimental-backends = true;
+      backend = "glx";
     };
   };
 

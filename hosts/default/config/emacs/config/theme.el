@@ -27,7 +27,7 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(load-theme 'doom-tokyo-night t)
+(load-theme 'catppuccin t)
 (setq doom-tokyo-night-brighter-comments t)
 (setq doom-tokyo-night-brighter-modeline t)
 

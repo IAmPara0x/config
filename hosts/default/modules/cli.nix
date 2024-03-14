@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
@@ -26,6 +26,8 @@
     tree
     btop
 
+    zlib
+
     yt-dlp
     termusic
   ];
@@ -38,4 +40,15 @@
       enableZshIntegration = true;
     };
   };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
 }
