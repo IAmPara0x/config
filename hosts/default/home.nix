@@ -11,6 +11,7 @@ in {
     ./modules/python.nix
     ./modules/lua.nix
     ./modules/zsh.nix
+    ./modules/vim.nix
     ./modules/kitty.nix
     ./modules/cli.nix
     ./modules/xdg.nix
