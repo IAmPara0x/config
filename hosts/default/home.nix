@@ -15,6 +15,7 @@ in {
     ./modules/kitty.nix
     ./modules/cli.nix
     ./modules/xdg.nix
+    ./modules/sioyek.nix
     ../../modules/firefox.nix
     ./modules/chromium.nix
   ];
@@ -53,7 +54,6 @@ in {
       pamixer
 
       # PDF(s) and readings
-      zathura
       zotero
       okular
 
