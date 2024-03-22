@@ -10,9 +10,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    tomato-c = {
+      url = "github:gabrielzschmitz/Tomato.C";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, nur, nixpkgs, ... }@inputs:
+  outputs = { self, nur, nixpkgs, tomato-c, ... }@inputs:
     let
       changeGcc = final: prev: { gcc = pkgs.gcc12; };
       system = "x86_64-linux";
@@ -30,7 +35,10 @@
 
     in {
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs self stateVersion pkgs; };
+        specialArgs = {
+          inherit inputs self stateVersion pkgs;
+          tomato-c = tomato-c.defaultPackage.${system};
+        };
         modules = [
           ./hosts/default/configuration.nix
           inputs.home-manager.nixosModules.default

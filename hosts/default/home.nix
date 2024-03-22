@@ -38,6 +38,13 @@ in {
         llvmPackages = llvmPackages_16;
         enableLibcxx = false;
       })
+
+      # man pages
+
+      man-pages
+      man-pages-posix
+
+      # Nix language server
       nil
       # Do not use the clangd from this package as it does not work correctly with
       # stdlib headers.
@@ -70,6 +77,7 @@ in {
 
       nixfmt
       tree-sitter
+      tomato-c
     ];
 
     file = {

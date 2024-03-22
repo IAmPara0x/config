@@ -34,7 +34,6 @@
       "https://hydra.iohk.io"
       "https://iohk.cachix.org"
       "https://cache.nixos.org/"
-      "https://anyrun.cachix.org"
       "https://fufexan.cachix.org"
     ];
 
@@ -51,9 +50,9 @@
   };
 
   nix.gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 21d";
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 21d";
   };
 
   # Set your time zone.
@@ -169,6 +168,8 @@
     cryptsetup
     pciutils
   ];
+
+  hardware.bluetooth.enable = true;
 
   environment.pathsToLink = [ "/share/zsh" ];
 

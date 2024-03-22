@@ -1,9 +1,9 @@
-{pkgs, lib, ...}: {
+{ pkgs, lib, ... }: {
 
   programs.sioyek = {
     enable = true;
-    config = {  
-      "background_color" = "#1e1e2e"; 
+    config = {
+      "background_color" = "#1e1e2e";
       "text_highlight_color" = "#f9e2af";
       "visual_mark_color" = "#7f849c";
       "search_highlight_color" = "#f9e2af";
@@ -22,6 +22,6 @@
       "ui_background_color" = "#313244";
       "ui_selected_text_color" = "#cdd6f4";
       "ui_selected_background_color" = "#585b70";
-      };
     };
+  };
 }
