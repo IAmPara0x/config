@@ -78,6 +78,8 @@ in {
       nixfmt
       tree-sitter
       tomato-c
+
+      brave
     ];
 
     file = {

@@ -30,6 +30,12 @@
         sha256 = "sha256:1yhc6wsqwgdy9k5shnyqhqckpw8h7b70dchj1092cisjavq2l8fw";
         version = "4.9.77";
       })
+      (createChromiumExtension {
+        # dark reader
+        id = "doojmbjmlfjjnbmnoijecmcbfeoakpjm";
+        sha256 = "sha256:1076i3dbzqr2anginm7dh94rxi2armcc42rv6j81pc5bnchq5bz0";
+        version = "11.4.18";
+      })
     ];
   };
 }
