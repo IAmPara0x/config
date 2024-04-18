@@ -19,12 +19,12 @@
 
   outputs = { self, nur, nixpkgs, tomato-c, ... }@inputs:
     let
-      changeGcc = final: prev: { gcc = pkgs.gcc12; };
+      decreaseClangPriority = (self: super: { clang = super.lib.setPrio 15 super.clang; });
       system = "x86_64-linux";
       stateVersion = "23.11"; # Please read the comment before changing.
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ inputs.nur.overlay ];
+        overlays = [ inputs.nur.overlay decreaseClangPriority ];
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;

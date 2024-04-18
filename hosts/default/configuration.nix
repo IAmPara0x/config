@@ -180,6 +180,23 @@
     pciutils
     pulseaudio
     pulsemixer
+
+
+    # Do not use the clangd from this package as it does not work correctly with
+    # stdlib headers.
+    llvmPackages_16.libstdcxxClang
+    llvmPackages_16.openmp
+
+    cudaPackages.cudnn
+    cudatoolkit
+
+    gnumake
+    cmake
+    (hiPrio gcc)
+    (clang-tools.override {
+      llvmPackages = llvmPackages_16;
+      enableLibcxx = false;
+    })
   ];
 
   hardware.bluetooth.enable = true;

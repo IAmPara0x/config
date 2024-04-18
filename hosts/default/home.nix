@@ -32,12 +32,6 @@ in {
       rustc
       cargo
       ruby
-      gnumake
-      cmake
-      (hiPrio clang-tools.override {
-        llvmPackages = llvmPackages_16;
-        enableLibcxx = false;
-      })
 
       # man pages
 
@@ -46,12 +40,6 @@ in {
 
       # Nix language server
       nil
-      # Do not use the clangd from this package as it does not work correctly with
-      # stdlib headers.
-      llvmPackages_16.libstdcxxClang
-
-      cudaPackages.cudnn
-      cudatoolkit
 
       # Application launcher
       rofi
@@ -78,8 +66,6 @@ in {
       nixfmt
       tree-sitter
       tomato-c
-
-      brave
     ];
 
     file = {
