@@ -80,10 +80,8 @@
     desktopManager.xfce.enable = true;
     windowManager.bspwm.enable = true;
     videoDrivers = [ "nvidia" ];
-
-    layout = "us";
-    xkbVariant = "";
-
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   hardware.opengl = {
@@ -92,10 +90,6 @@
     driSupport32Bit = true;
   };
 
-  # hardware.nvidia = {
-  #   package = pkgs.cudaPackages.nvidia_driver;
-  # };
-  #
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
     version = "550.54.14";
     sha256_64bit = "sha256-jEl/8c/HwxD7h1FJvDD6pP0m0iN7LLps0uiweAFXz+M=";
@@ -129,16 +123,17 @@
     #media-session.enable = true;
   };
 
-  environment.etc = {
-    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+  services.pipewire.wireplumber.configPackages = [
+    (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
       bluez_monitor.properties = {
         ["bluez5.enable-sbc-xq"] = true,
         ["bluez5.enable-msbc"] = true,
         ["bluez5.enable-hw-volume"] = true,
         ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
       }
-    '';
-  };
+    '')
+  ];
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -149,7 +144,7 @@
   users.users.paradox = {
     isNormalUser = true;
     description = "paradox";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "mpd" ];
     shell = pkgs.zsh;
   };
 

@@ -46,7 +46,9 @@ in {
 
       # Media
       mpv
+      mpd
       pamixer
+      mpc-cli
 
       # PDF(s) and readings
       zotero
@@ -118,8 +120,34 @@ in {
     enable = true;
     extraPackages = epkgs: with epkgs; [ tree-sitter-langs tree-sitter ];
   };
+
+  programs.ncmpcpp = {
+    enable = true;
+    settings = {
+      mpd_host = "/run/user/1000/mpd/socket";
+    };
+  };
+
   programs.bat.enable = true;
   systemd.user.startServices = "sd-switch";
+
+
+
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/home/paradox/Music/";
+    extraConfig = 
+    ''
+      audio_output {
+        type "pipewire"
+        name "My Pipewire output"
+      }
+    '';
+
+    # Optional:
+    network.listenAddress = "any"; # if you want to allow non-localhost connections
+    network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+  };
 
   gtk = {
     enable = true;
